@@ -1,0 +1,57 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: PawnFactory
+    network: kovan
+    source:
+      address: '0x0000000000000000000000000000000000000000'
+      abi: PawnFactory
+      startBlock: 23000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/factory.ts
+      entities:
+        - Order
+        - Offer
+      abis:
+        - name: PawnFactory
+          file: ./abis/PawnFactory.json
+      eventHandlers:
+        - event: SpaceCreated(indexed address,address,uint256)
+          handler: handleSpaceCreated
+templates:
+  - kind: ethereum/contract
+    name: PawnSpace
+    network: kovan
+    source:
+      abi: PawnSpace
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/space.ts
+      entities:
+        - Order
+        - Offer
+      abis:
+        - name: PawnSpace
+          file: ./abis/PawnSpace.json
+        - name: PawnFactory
+          file: ./abis/PawnFactory.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: MintOrder(indexed address,uint256,uint256[],uint256,uint256)
+          handler: handleMintOrder
+        - event: BurnOrder(indexed address,uint256)
+          handler: handleBurnOrder
+        - event: MintOffer(indexed address,uint256,uint256,uint256)
+          handler: handleMintOffer
+        - event: Payback(indexed address,uint256,uint256)
+          handler: handlePayback
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw

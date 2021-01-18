@@ -1,0 +1,17 @@
+type Order @entity {
+  id: ID!
+  owner: String!
+  borrowingPeriod: BigInt!
+  requestAmount: BigInt!
+  createdBlockTimestamp: BigInt!
+  offeredBlockTimestamp: BigInt!
+  offer: Offer!
+}
+
+type Offer @entity {
+  id: ID!
+  order: Order!
+  offeror: String!
+  interest: BigInt!
+  createdBlockTimestamp: BigInt!
+}
