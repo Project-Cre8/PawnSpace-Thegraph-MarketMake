@@ -12,6 +12,104 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class Factory extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Factory entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Factory entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Factory", id.toString(), this);
+  }
+
+  static load(id: string): Factory | null {
+    return store.get("Factory", id) as Factory | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get spaceCount(): i32 {
+    let value = this.get("spaceCount");
+    return value.toI32();
+  }
+
+  set spaceCount(value: i32) {
+    this.set("spaceCount", Value.fromI32(value));
+  }
+
+  get spaces(): Array<string | null> {
+    let value = this.get("spaces");
+    return value.toStringArray();
+  }
+
+  set spaces(value: Array<string | null>) {
+    this.set("spaces", Value.fromStringArray(value));
+  }
+}
+
+export class Space extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Space entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Space entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Space", id.toString(), this);
+  }
+
+  static load(id: string): Space | null {
+    return store.get("Space", id) as Space | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get nftAddress(): string {
+    let value = this.get("nftAddress");
+    return value.toString();
+  }
+
+  set nftAddress(value: string) {
+    this.set("nftAddress", Value.fromString(value));
+  }
+
+  get orders(): Array<string | null> {
+    let value = this.get("orders");
+    return value.toStringArray();
+  }
+
+  set orders(value: Array<string | null>) {
+    this.set("orders", Value.fromStringArray(value));
+  }
+}
+
 export class Order extends Entity {
   constructor(id: string) {
     super();
@@ -51,13 +149,13 @@ export class Order extends Entity {
     this.set("owner", Value.fromString(value));
   }
 
-  get borrowingPeriod(): BigInt {
-    let value = this.get("borrowingPeriod");
-    return value.toBigInt();
+  get tokenIds(): Array<BigInt> {
+    let value = this.get("tokenIds");
+    return value.toBigIntArray();
   }
 
-  set borrowingPeriod(value: BigInt) {
-    this.set("borrowingPeriod", Value.fromBigInt(value));
+  set tokenIds(value: Array<BigInt>) {
+    this.set("tokenIds", Value.fromBigIntArray(value));
   }
 
   get requestAmount(): BigInt {
@@ -69,71 +167,31 @@ export class Order extends Entity {
     this.set("requestAmount", Value.fromBigInt(value));
   }
 
-  get createdBlockTimestamp(): BigInt {
-    let value = this.get("createdBlockTimestamp");
+  get interest(): BigInt {
+    let value = this.get("interest");
     return value.toBigInt();
   }
 
-  set createdBlockTimestamp(value: BigInt) {
-    this.set("createdBlockTimestamp", Value.fromBigInt(value));
+  set interest(value: BigInt) {
+    this.set("interest", Value.fromBigInt(value));
   }
 
-  get offeredBlockTimestamp(): BigInt {
-    let value = this.get("offeredBlockTimestamp");
+  get period(): BigInt {
+    let value = this.get("period");
     return value.toBigInt();
   }
 
-  set offeredBlockTimestamp(value: BigInt) {
-    this.set("offeredBlockTimestamp", Value.fromBigInt(value));
+  set period(value: BigInt) {
+    this.set("period", Value.fromBigInt(value));
   }
 
-  get offer(): string {
-    let value = this.get("offer");
-    return value.toString();
+  get additionalCollateral(): BigInt {
+    let value = this.get("additionalCollateral");
+    return value.toBigInt();
   }
 
-  set offer(value: string) {
-    this.set("offer", Value.fromString(value));
-  }
-}
-
-export class Offer extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save Offer entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Offer entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Offer", id.toString(), this);
-  }
-
-  static load(id: string): Offer | null {
-    return store.get("Offer", id) as Offer | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get order(): string {
-    let value = this.get("order");
-    return value.toString();
-  }
-
-  set order(value: string) {
-    this.set("order", Value.fromString(value));
+  set additionalCollateral(value: BigInt) {
+    this.set("additionalCollateral", Value.fromBigInt(value));
   }
 
   get offeror(): string {
@@ -145,21 +203,48 @@ export class Offer extends Entity {
     this.set("offeror", Value.fromString(value));
   }
 
-  get interest(): BigInt {
-    let value = this.get("interest");
+  get createdAt(): BigInt {
+    let value = this.get("createdAt");
     return value.toBigInt();
   }
 
-  set interest(value: BigInt) {
-    this.set("interest", Value.fromBigInt(value));
+  set createdAt(value: BigInt) {
+    this.set("createdAt", Value.fromBigInt(value));
   }
 
-  get createdBlockTimestamp(): BigInt {
-    let value = this.get("createdBlockTimestamp");
+  get offeredAt(): BigInt {
+    let value = this.get("offeredAt");
     return value.toBigInt();
   }
 
-  set createdBlockTimestamp(value: BigInt) {
-    this.set("createdBlockTimestamp", Value.fromBigInt(value));
+  set offeredAt(value: BigInt) {
+    this.set("offeredAt", Value.fromBigInt(value));
+  }
+
+  get paidBackAt(): BigInt {
+    let value = this.get("paidBackAt");
+    return value.toBigInt();
+  }
+
+  set paidBackAt(value: BigInt) {
+    this.set("paidBackAt", Value.fromBigInt(value));
+  }
+
+  get withdrewAt(): BigInt {
+    let value = this.get("withdrewAt");
+    return value.toBigInt();
+  }
+
+  set withdrewAt(value: BigInt) {
+    this.set("withdrewAt", Value.fromBigInt(value));
+  }
+
+  get space(): string {
+    let value = this.get("space");
+    return value.toString();
+  }
+
+  set space(value: string) {
+    this.set("space", Value.fromString(value));
   }
 }

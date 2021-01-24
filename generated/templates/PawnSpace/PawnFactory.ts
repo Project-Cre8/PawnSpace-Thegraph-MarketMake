@@ -41,6 +41,21 @@ export class PawnFactory extends ethereum.SmartContract {
     return new PawnFactory("PawnFactory", address);
   }
 
+  aToken(): Address {
+    let result = super.call("aToken", "aToken():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_aToken(): ethereum.CallResult<Address> {
+    let result = super.tryCall("aToken", "aToken():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   allSpaces(param0: BigInt): Address {
     let result = super.call("allSpaces", "allSpaces(uint256):(address)", [
       ethereum.Value.fromUnsignedBigInt(param0)
@@ -109,6 +124,36 @@ export class PawnFactory extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
+  lendingPool(): Address {
+    let result = super.call("lendingPool", "lendingPool():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_lendingPool(): ethereum.CallResult<Address> {
+    let result = super.tryCall("lendingPool", "lendingPool():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  token(): Address {
+    let result = super.call("token", "token():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_token(): ethereum.CallResult<Address> {
+    let result = super.tryCall("token", "token():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   allSpacesLength(): BigInt {
     let result = super.call(
       "allSpacesLength",
@@ -132,19 +177,19 @@ export class PawnFactory extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  createSpace(token: Address): Address {
+  createSpace(nft: Address): Address {
     let result = super.call("createSpace", "createSpace(address):(address)", [
-      ethereum.Value.fromAddress(token)
+      ethereum.Value.fromAddress(nft)
     ]);
 
     return result[0].toAddress();
   }
 
-  try_createSpace(token: Address): ethereum.CallResult<Address> {
+  try_createSpace(nft: Address): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "createSpace",
       "createSpace(address):(address)",
-      [ethereum.Value.fromAddress(token)]
+      [ethereum.Value.fromAddress(nft)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -174,6 +219,18 @@ export class ConstructorCall__Inputs {
   get _feeToSetter(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
+
+  get _token(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _aToken(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get _lendingPool(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
 }
 
 export class ConstructorCall__Outputs {
@@ -201,7 +258,7 @@ export class CreateSpaceCall__Inputs {
     this._call = call;
   }
 
-  get token(): Address {
+  get nft(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }

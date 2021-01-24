@@ -61,6 +61,14 @@ $ yarn codegen
 
 ## Deploy the subgraph
 
+Copy the access token displayed on the dashboard and run the following command. This will store the access token on your computer. You only need to do this once, or if you ever regenerate the access token.
+
+```
+$ graph auth https://api.thegraph.com/deploy/ <ACCESS_TOKEN>
+```
+
+You can deploy
+
 ```
 $ yarn deploy
 ```

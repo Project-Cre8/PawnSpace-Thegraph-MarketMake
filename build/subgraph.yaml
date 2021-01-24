@@ -1,25 +1,25 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: PawnFactory
     network: kovan
     source:
-      address: '0xB2Dfc879659F94B4f2110983cB0525374d60512E'
+      address: "0xB2Dfc879659F94B4f2110983cB0525374d60512E"
       abi: PawnFactory
       startBlock: 23129250
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./src/factory.ts
+      file: PawnFactory/PawnFactory.wasm
       entities:
         - Order
         - Offer
       abis:
         - name: PawnFactory
-          file: ./abis/PawnFactory.json
+          file: PawnFactory/abis/PawnFactory.json
       eventHandlers:
         - event: SpaceCreated(indexed address,address,uint256)
           handler: handleSpaceCreated
@@ -33,20 +33,20 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./src/space.ts
+      file: templates/PawnSpace/PawnSpace.wasm
       entities:
         - Order
         - Offer
       abis:
         - name: PawnSpace
-          file: ./abis/PawnSpace.json
+          file: PawnSpace/abis/PawnSpace.json
         - name: PawnFactory
-          file: ./abis/PawnFactory.json
+          file: PawnSpace/abis/PawnFactory.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
-
-        - event: MintOrder(indexed address,uint256,uint256[],uint256,uint256,uint256,uint256,uint256)
+        - event: MintOrder(indexed
+            address,uint256,uint256[],uint256,uint256,uint256,uint256,uint256)
           handler: handleMintOrder
         - event: BurnOrder(indexed address,uint256)
           handler: handleBurnOrder

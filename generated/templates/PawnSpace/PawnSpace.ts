@@ -84,36 +84,6 @@ export class BurnOrder__Params {
   }
 }
 
-export class MintOffer extends ethereum.Event {
-  get params(): MintOffer__Params {
-    return new MintOffer__Params(this);
-  }
-}
-
-export class MintOffer__Params {
-  _event: MintOffer;
-
-  constructor(event: MintOffer) {
-    this._event = event;
-  }
-
-  get sender(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get offerId(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get orderId(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get interest(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-}
-
 export class MintOrder extends ethereum.Event {
   get params(): MintOrder__Params {
     return new MintOrder__Params(this);
@@ -143,8 +113,46 @@ export class MintOrder__Params {
     return this._event.parameters[3].value.toBigInt();
   }
 
-  get period(): BigInt {
+  get interest(): BigInt {
     return this._event.parameters[4].value.toBigInt();
+  }
+
+  get period(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get additionalCollateral(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get createdAt(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
+  }
+}
+
+export class Offer extends ethereum.Event {
+  get params(): Offer__Params {
+    return new Offer__Params(this);
+  }
+}
+
+export class Offer__Params {
+  _event: Offer;
+
+  constructor(event: Offer) {
+    this._event = event;
+  }
+
+  get sender(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get orderId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get offeredAt(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
   }
 }
 
@@ -169,7 +177,7 @@ export class Payback__Params {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get offerId(): BigInt {
+  get paidBackAt(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -220,28 +228,9 @@ export class Withdraw__Params {
   get orderId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
-}
 
-export class PawnSpace__offersResult {
-  value0: BigInt;
-  value1: Address;
-  value2: BigInt;
-  value3: BigInt;
-
-  constructor(value0: BigInt, value1: Address, value2: BigInt, value3: BigInt) {
-    this.value0 = value0;
-    this.value1 = value1;
-    this.value2 = value2;
-    this.value3 = value3;
-  }
-
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromAddress(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
-    return map;
+  get withdrewAt(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
   }
 }
 
@@ -250,20 +239,32 @@ export class PawnSpace__ordersResult {
   value1: BigInt;
   value2: BigInt;
   value3: BigInt;
-  value4: BigInt;
+  value4: Address;
+  value5: BigInt;
+  value6: BigInt;
+  value7: BigInt;
+  value8: BigInt;
 
   constructor(
     value0: BigInt,
     value1: BigInt,
     value2: BigInt,
     value3: BigInt,
-    value4: BigInt
+    value4: Address,
+    value5: BigInt,
+    value6: BigInt,
+    value7: BigInt,
+    value8: BigInt
   ) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
     this.value3 = value3;
     this.value4 = value4;
+    this.value5 = value5;
+    this.value6 = value6;
+    this.value7 = value7;
+    this.value8 = value8;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -272,7 +273,11 @@ export class PawnSpace__ordersResult {
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
-    map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
+    map.set("value4", ethereum.Value.fromAddress(this.value4));
+    map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
+    map.set("value6", ethereum.Value.fromUnsignedBigInt(this.value6));
+    map.set("value7", ethereum.Value.fromUnsignedBigInt(this.value7));
+    map.set("value8", ethereum.Value.fromUnsignedBigInt(this.value8));
     return map;
   }
 }
@@ -284,7 +289,11 @@ export class PawnSpace__getOrderResult {
   value3: BigInt;
   value4: BigInt;
   value5: BigInt;
-  value6: BigInt;
+  value6: Address;
+  value7: BigInt;
+  value8: BigInt;
+  value9: BigInt;
+  value10: BigInt;
 
   constructor(
     value0: Array<BigInt>,
@@ -293,7 +302,11 @@ export class PawnSpace__getOrderResult {
     value3: BigInt,
     value4: BigInt,
     value5: BigInt,
-    value6: BigInt
+    value6: Address,
+    value7: BigInt,
+    value8: BigInt,
+    value9: BigInt,
+    value10: BigInt
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -302,6 +315,10 @@ export class PawnSpace__getOrderResult {
     this.value4 = value4;
     this.value5 = value5;
     this.value6 = value6;
+    this.value7 = value7;
+    this.value8 = value8;
+    this.value9 = value9;
+    this.value10 = value10;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -312,30 +329,11 @@ export class PawnSpace__getOrderResult {
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
     map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
-    map.set("value6", ethereum.Value.fromUnsignedBigInt(this.value6));
-    return map;
-  }
-}
-
-export class PawnSpace__getOfferResult {
-  value0: BigInt;
-  value1: Address;
-  value2: BigInt;
-  value3: BigInt;
-
-  constructor(value0: BigInt, value1: Address, value2: BigInt, value3: BigInt) {
-    this.value0 = value0;
-    this.value1 = value1;
-    this.value2 = value2;
-    this.value3 = value3;
-  }
-
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromAddress(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
+    map.set("value6", ethereum.Value.fromAddress(this.value6));
+    map.set("value7", ethereum.Value.fromUnsignedBigInt(this.value7));
+    map.set("value8", ethereum.Value.fromUnsignedBigInt(this.value8));
+    map.set("value9", ethereum.Value.fromUnsignedBigInt(this.value9));
+    map.set("value10", ethereum.Value.fromUnsignedBigInt(this.value10));
     return map;
   }
 }
@@ -366,6 +364,21 @@ export class PawnSpace extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  aToken(): Address {
+    let result = super.call("aToken", "aToken():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_aToken(): ethereum.CallResult<Address> {
+    let result = super.tryCall("aToken", "aToken():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   balanceOf(owner: Address): BigInt {
@@ -464,6 +477,21 @@ export class PawnSpace extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
+  lendingPool(): Address {
+    let result = super.call("lendingPool", "lendingPool():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_lendingPool(): ethereum.CallResult<Address> {
+    let result = super.tryCall("lendingPool", "lendingPool():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   name(): string {
     let result = super.call("name", "name():(string)", []);
 
@@ -494,45 +522,10 @@ export class PawnSpace extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  offers(param0: BigInt): PawnSpace__offersResult {
-    let result = super.call(
-      "offers",
-      "offers(uint256):(uint256,address,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
-
-    return new PawnSpace__offersResult(
-      result[0].toBigInt(),
-      result[1].toAddress(),
-      result[2].toBigInt(),
-      result[3].toBigInt()
-    );
-  }
-
-  try_offers(param0: BigInt): ethereum.CallResult<PawnSpace__offersResult> {
-    let result = super.tryCall(
-      "offers",
-      "offers(uint256):(uint256,address,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new PawnSpace__offersResult(
-        value[0].toBigInt(),
-        value[1].toAddress(),
-        value[2].toBigInt(),
-        value[3].toBigInt()
-      )
-    );
-  }
-
   orders(param0: BigInt): PawnSpace__ordersResult {
     let result = super.call(
       "orders",
-      "orders(uint256):(uint256,uint256,uint256,uint256,uint256)",
+      "orders(uint256):(uint256,uint256,uint256,uint256,address,uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
@@ -541,14 +534,18 @@ export class PawnSpace extends ethereum.SmartContract {
       result[1].toBigInt(),
       result[2].toBigInt(),
       result[3].toBigInt(),
-      result[4].toBigInt()
+      result[4].toAddress(),
+      result[5].toBigInt(),
+      result[6].toBigInt(),
+      result[7].toBigInt(),
+      result[8].toBigInt()
     );
   }
 
   try_orders(param0: BigInt): ethereum.CallResult<PawnSpace__ordersResult> {
     let result = super.tryCall(
       "orders",
-      "orders(uint256):(uint256,uint256,uint256,uint256,uint256)",
+      "orders(uint256):(uint256,uint256,uint256,uint256,address,uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -561,7 +558,11 @@ export class PawnSpace extends ethereum.SmartContract {
         value[1].toBigInt(),
         value[2].toBigInt(),
         value[3].toBigInt(),
-        value[4].toBigInt()
+        value[4].toAddress(),
+        value[5].toBigInt(),
+        value[6].toBigInt(),
+        value[7].toBigInt(),
+        value[8].toBigInt()
       )
     );
   }
@@ -578,6 +579,44 @@ export class PawnSpace extends ethereum.SmartContract {
     let result = super.tryCall("ownerOf", "ownerOf(uint256):(address)", [
       ethereum.Value.fromUnsignedBigInt(tokenId)
     ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  stableToken(): Address {
+    let result = super.call("stableToken", "stableToken():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_stableToken(): ethereum.CallResult<Address> {
+    let result = super.tryCall("stableToken", "stableToken():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  stableTokenAddress(): Address {
+    let result = super.call(
+      "stableTokenAddress",
+      "stableTokenAddress():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_stableTokenAddress(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "stableTokenAddress",
+      "stableTokenAddress():(address)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -751,7 +790,7 @@ export class PawnSpace extends ethereum.SmartContract {
   getOrder(id: BigInt): PawnSpace__getOrderResult {
     let result = super.call(
       "getOrder",
-      "getOrder(uint256):(uint256[],address,uint256,uint256,uint256,uint256,uint256)",
+      "getOrder(uint256):(uint256[],address,uint256,uint256,uint256,uint256,address,uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromUnsignedBigInt(id)]
     );
 
@@ -762,14 +801,18 @@ export class PawnSpace extends ethereum.SmartContract {
       result[3].toBigInt(),
       result[4].toBigInt(),
       result[5].toBigInt(),
-      result[6].toBigInt()
+      result[6].toAddress(),
+      result[7].toBigInt(),
+      result[8].toBigInt(),
+      result[9].toBigInt(),
+      result[10].toBigInt()
     );
   }
 
   try_getOrder(id: BigInt): ethereum.CallResult<PawnSpace__getOrderResult> {
     let result = super.tryCall(
       "getOrder",
-      "getOrder(uint256):(uint256[],address,uint256,uint256,uint256,uint256,uint256)",
+      "getOrder(uint256):(uint256[],address,uint256,uint256,uint256,uint256,address,uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromUnsignedBigInt(id)]
     );
     if (result.reverted) {
@@ -784,44 +827,11 @@ export class PawnSpace extends ethereum.SmartContract {
         value[3].toBigInt(),
         value[4].toBigInt(),
         value[5].toBigInt(),
-        value[6].toBigInt()
-      )
-    );
-  }
-
-  getOffer(offerId: BigInt): PawnSpace__getOfferResult {
-    let result = super.call(
-      "getOffer",
-      "getOffer(uint256):(uint256,address,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(offerId)]
-    );
-
-    return new PawnSpace__getOfferResult(
-      result[0].toBigInt(),
-      result[1].toAddress(),
-      result[2].toBigInt(),
-      result[3].toBigInt()
-    );
-  }
-
-  try_getOffer(
-    offerId: BigInt
-  ): ethereum.CallResult<PawnSpace__getOfferResult> {
-    let result = super.tryCall(
-      "getOffer",
-      "getOffer(uint256):(uint256,address,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(offerId)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new PawnSpace__getOfferResult(
-        value[0].toBigInt(),
-        value[1].toAddress(),
-        value[2].toBigInt(),
-        value[3].toBigInt()
+        value[6].toAddress(),
+        value[7].toBigInt(),
+        value[8].toBigInt(),
+        value[9].toBigInt(),
+        value[10].toBigInt()
       )
     );
   }
@@ -829,15 +839,19 @@ export class PawnSpace extends ethereum.SmartContract {
   order(
     tokenIds: Array<BigInt>,
     requestAmount: BigInt,
-    period: BigInt
+    interest: BigInt,
+    period: BigInt,
+    additionalCollateral: BigInt
   ): BigInt {
     let result = super.call(
       "order",
-      "order(uint256[],uint256,uint256):(uint256)",
+      "order(uint256[],uint256,uint256,uint256,uint256):(uint256)",
       [
         ethereum.Value.fromUnsignedBigIntArray(tokenIds),
         ethereum.Value.fromUnsignedBigInt(requestAmount),
-        ethereum.Value.fromUnsignedBigInt(period)
+        ethereum.Value.fromUnsignedBigInt(interest),
+        ethereum.Value.fromUnsignedBigInt(period),
+        ethereum.Value.fromUnsignedBigInt(additionalCollateral)
       ]
     );
 
@@ -847,36 +861,21 @@ export class PawnSpace extends ethereum.SmartContract {
   try_order(
     tokenIds: Array<BigInt>,
     requestAmount: BigInt,
-    period: BigInt
+    interest: BigInt,
+    period: BigInt,
+    additionalCollateral: BigInt
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "order",
-      "order(uint256[],uint256,uint256):(uint256)",
+      "order(uint256[],uint256,uint256,uint256,uint256):(uint256)",
       [
         ethereum.Value.fromUnsignedBigIntArray(tokenIds),
         ethereum.Value.fromUnsignedBigInt(requestAmount),
-        ethereum.Value.fromUnsignedBigInt(period)
+        ethereum.Value.fromUnsignedBigInt(interest),
+        ethereum.Value.fromUnsignedBigInt(period),
+        ethereum.Value.fromUnsignedBigInt(additionalCollateral)
       ]
     );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  offer(orderId: BigInt): BigInt {
-    let result = super.call("offer", "offer(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(orderId)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_offer(orderId: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("offer", "offer(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(orderId)
-    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1114,8 +1113,20 @@ export class InitializeCall__Inputs {
     this._call = call;
   }
 
-  get _token(): Address {
+  get _nft(): Address {
     return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _token(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _aToken(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get _lendingPool(): Address {
+    return this._call.inputValues[3].value.toAddress();
   }
 }
 
@@ -1152,8 +1163,16 @@ export class OrderCall__Inputs {
     return this._call.inputValues[1].value.toBigInt();
   }
 
-  get period(): BigInt {
+  get interest(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get period(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get additionalCollateral(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
   }
 }
 
@@ -1227,26 +1246,22 @@ export class OfferCall__Outputs {
   constructor(call: OfferCall) {
     this._call = call;
   }
+}
 
-  get offerId(): BigInt {
-    return this._call.outputValues[0].value.toBigInt();
+export class PayBackCall extends ethereum.Call {
+  get inputs(): PayBackCall__Inputs {
+    return new PayBackCall__Inputs(this);
+  }
+
+  get outputs(): PayBackCall__Outputs {
+    return new PayBackCall__Outputs(this);
   }
 }
 
-export class PaybackCall extends ethereum.Call {
-  get inputs(): PaybackCall__Inputs {
-    return new PaybackCall__Inputs(this);
-  }
+export class PayBackCall__Inputs {
+  _call: PayBackCall;
 
-  get outputs(): PaybackCall__Outputs {
-    return new PaybackCall__Outputs(this);
-  }
-}
-
-export class PaybackCall__Inputs {
-  _call: PaybackCall;
-
-  constructor(call: PaybackCall) {
+  constructor(call: PayBackCall) {
     this._call = call;
   }
 
@@ -1255,10 +1270,10 @@ export class PaybackCall__Inputs {
   }
 }
 
-export class PaybackCall__Outputs {
-  _call: PaybackCall;
+export class PayBackCall__Outputs {
+  _call: PayBackCall;
 
-  constructor(call: PaybackCall) {
+  constructor(call: PayBackCall) {
     this._call = call;
   }
 }
