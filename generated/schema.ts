@@ -239,6 +239,15 @@ export class Order extends Entity {
     this.set("withdrewAt", Value.fromBigInt(value));
   }
 
+  get burned(): boolean {
+    let value = this.get("burned");
+    return value.toBoolean();
+  }
+
+  set burned(value: boolean) {
+    this.set("burned", Value.fromBoolean(value));
+  }
+
   get space(): string {
     let value = this.get("space");
     return value.toString();

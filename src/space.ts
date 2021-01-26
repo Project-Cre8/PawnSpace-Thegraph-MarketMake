@@ -22,6 +22,7 @@ export function handleMintOrder(event: MintOrder): void {
   order.offeredAt = ZERO_BI;
   order.paidBackAt = ZERO_BI;
   order.withdrewAt = ZERO_BI;
+  order.burned = false;
   order.space = spaceAddress;
   order.save();
 
@@ -32,7 +33,51 @@ export function handleMintOrder(event: MintOrder): void {
   space.orders = ordersTemp;
   space.save();
 }
-export function handleBurnOrder(event: BurnOrder): void {}
-export function handleOffer(event: Offer): void {}
-export function handlePayback(event: Payback): void {}
-export function handleWithdraw(event: Withdraw): void {}
+export function handleBurnOrder(event: BurnOrder): void {
+  // load order
+  let id = event.address
+    .toHexString()
+    .concat('-')
+    .concat(event.params.orderId.toHexString());
+  let order = Order.load(id);
+
+  // update order
+  order.burned = true;
+  order.save();
+}
+export function handleOffer(event: Offer): void {
+  // load order
+  let id = event.address
+    .toHexString()
+    .concat('-')
+    .concat(event.params.orderId.toHexString());
+  let order = Order.load(id);
+
+  // update order
+  order.offeredAt = event.params.offeredAt;
+  order.save();
+}
+export function handlePayback(event: Payback): void {
+  // load order
+  let id = event.address
+    .toHexString()
+    .concat('-')
+    .concat(event.params.orderId.toHexString());
+  let order = Order.load(id);
+
+  // update order
+  order.paidBackAt = event.params.paidBackAt;
+  order.save();
+}
+export function handleWithdraw(event: Withdraw): void {
+  // load order
+  let id = event.address
+    .toHexString()
+    .concat('-')
+    .concat(event.params.orderId.toHexString());
+  let order = Order.load(id);
+
+  // update order
+  order.withdrewAt = event.params.withdrewAt;
+  order.save();
+}

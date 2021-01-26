@@ -45,7 +45,6 @@ templates:
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
-
         - event: MintOrder(indexed address,uint256,uint256[],uint256,uint256,uint256,uint256,uint256)
           handler: handleMintOrder
         - event: BurnOrder(indexed address,uint256)

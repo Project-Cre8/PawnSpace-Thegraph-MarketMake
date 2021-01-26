@@ -30,5 +30,6 @@ type Order @entity {
   offeredAt: BigInt!
   paidBackAt: BigInt!
   withdrewAt: BigInt!
+  burned: Boolean!
   space: Space!
 }
