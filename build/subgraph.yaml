@@ -20,6 +20,12 @@ dataSources:
       abis:
         - name: PawnFactory
           file: PawnFactory/abis/PawnFactory.json
+        - name: ERC721
+          file: PawnFactory/abis/ERC721.json
+        - name: ERC721SymbolBytes
+          file: PawnFactory/abis/ERC721SymbolBytes.json
+        - name: ERC721NameBytes
+          file: PawnFactory/abis/ERC721NameBytes.json
       eventHandlers:
         - event: SpaceCreated(indexed address,address,uint256)
           handler: handleSpaceCreated

@@ -100,6 +100,24 @@ export class Space extends Entity {
     this.set("nftAddress", Value.fromString(value));
   }
 
+  get nftName(): string {
+    let value = this.get("nftName");
+    return value.toString();
+  }
+
+  set nftName(value: string) {
+    this.set("nftName", Value.fromString(value));
+  }
+
+  get nftSymbol(): string {
+    let value = this.get("nftSymbol");
+    return value.toString();
+  }
+
+  set nftSymbol(value: string) {
+    this.set("nftSymbol", Value.fromString(value));
+  }
+
   get orders(): Array<string | null> {
     let value = this.get("orders");
     return value.toStringArray();

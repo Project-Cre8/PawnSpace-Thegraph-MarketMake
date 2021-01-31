@@ -5,17 +5,11 @@ type Factory @entity {
 }
 type Space @entity {
   id: ID! # Space address
-  # nft: NFT!
   nftAddress: String!
+  nftName: String!
+  nftSymbol: String!
   orders: [Order]!
 }
-
-# type NFT @entity {
-#   id: ID! # NFT address
-#   symbol: String!
-#   name: String!
-#   totalSupply: BigInt!
-# }
 
 type Order @entity {
   id: ID! #Space address + "-"+ Order id
